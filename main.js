@@ -84,7 +84,7 @@ function update() {
 
     // bounce off top and bottom  
     if (ballYPosition <= 0 || ballYPosition >= 480){
-       ballYVelocity = ballYVelocity * -1
+       ballYVelocity = ballYVelocity * -1;
     }
 
     // Reset ball in center after goal, with 2 second delay to restart
