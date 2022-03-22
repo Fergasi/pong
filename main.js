@@ -18,6 +18,10 @@ const playerPaddle = document.querySelector('.player-paddle');
 // Get ball element
 const ball = document.querySelector('.ball');
 
+// Get score elements
+let playerScore = document.querySelector('#Player-1');
+let computerScore = document.querySelector('#Computer');
+
 // Variables to store the ball's x-position, y-position, x-velocity, and y-velocity
 let ballXPosition = 50;
 let ballYPosition = 50;
@@ -32,13 +36,17 @@ let computerPaddleYVelocity = 4;
 let playerPaddleYPosition = 0;
 let playerPaddleYVelocity = 25;
 
+// Player score counter variables
+playerScoreCount = 0;
+computerScoreCount = 0;
+
 //Event listener for player up and down movement
 document.addEventListener('keydown', function(e) {
-    if (e.keyCode == 38) {
+    if (e.key == 'ArrowUp') {
        if (playerPaddleYPosition >= 1){
            playerPaddleYPosition = playerPaddleYPosition- playerPaddleYVelocity;
         }
-    } else if (e.keyCode == 40) {
+    } else if (e.key == 'ArrowDown') {
         if (playerPaddleYPosition <= 380){
         playerPaddleYPosition = playerPaddleYPosition + playerPaddleYVelocity;
     }
@@ -60,10 +68,10 @@ function update() {
     computerPaddle.style.top = `${computerPaddleYPosition}px`;
     computerPaddle.style.bottom = `${computerPaddleYPosition + 100}px`;
     
-    // Update the ball's y-position 
+    // Update the ball's x-position 
     ballXPosition = ballXPosition + ballXVelocity;
 
-    // Update the ball's x-position
+    // Update the ball's y-position
     ballYPosition = ballYPosition + ballYVelocity;
 
     // Apply the x-position
@@ -74,7 +82,7 @@ function update() {
     ball.style.top = `${ballYPosition}px`
     ball.style.bottom = `${ballYPosition + 20}px`
 
-    // bounce off top and bottom (unless outside of gamearea, in case of goal) 
+    // bounce off top and bottom  
     if (ballYPosition <= 0 || ballYPosition >= 480){
        ballYVelocity = ballYVelocity * -1
     }
@@ -83,11 +91,6 @@ function update() {
     if (ballXPosition < 0 || ballXPosition > 680){
        setTimeout(() => {ballXPosition = 350; ballYPosition = 250;}, 2000);
     }
-
-    // // make computer paddle bounce off top and bottom
-    // if (computerPaddleYPosition < 0 || computerPaddleYPosition > 400){
-    //     computerPaddleYVelocity = computerPaddleYVelocity * -1;
-    // }
 
     // make ball bounce off computer paddle
     if ((ballXPosition + 20) === 680 && ballYPosition > (computerPaddleYPosition - 19) && (ballYPosition < computerPaddleYPosition + 100)){
@@ -99,6 +102,25 @@ function update() {
         ballXVelocity = ballXVelocity * -1;
     }
 
+    // Update computer score and change score text dom
+    if (ballXPosition === 0){
+        computerScoreCount += 1;
+        computerScore.innerText = `Computer: ${computerScoreCount}`;
+    }
+
+    // Update player score and change score text dom
+    if (ballXPosition === 700){
+        playerScoreCount += 1;
+        playerScore.innerText = `Player: ${playerScoreCount}`;
+    }
+
+    // ** STUFF I WAS TOO AMBITIOUS ABOUT **
+    
+    // // make computer paddle bounce off top and bottom
+    // if (computerPaddleYPosition < 0 || computerPaddleYPosition > 400){
+    //     computerPaddleYVelocity = computerPaddleYVelocity * -1;
+    // }
+    
     // // make ball bounce off top of player paddle
     // if (ballXPosition < 20 && ballXPosition > 0 && ballYPosition > (playerPaddleYPosition - 20) && ballYPosition <= playerPaddleYPosition){
     //     ballYVelocity = ballYVelocity * -1;
@@ -121,5 +143,5 @@ function update() {
 
 }
 
-// Call the update() function every 35ms
+// Call the update() function every 30ms
 setInterval(update, 30);
