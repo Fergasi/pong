@@ -9,7 +9,7 @@ body {
 }
 
 .game-area {
-    width: 65vw;
+    width: 60vw;
     height: 50vh;
     background-color: white;
     position: relative;
@@ -35,6 +35,9 @@ body {
 
 .player-paddle {
     left: 0;
+    top: 0;
+    bottom: 0;
+    transition: .1s ease;
 }
 
 .computer-paddle {

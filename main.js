@@ -24,7 +24,7 @@ let playerScore = document.querySelector('#Player-1');
 let computerScore = document.querySelector('#Computer');
 
 // Variables to store the ball's x-position, y-position, x-velocity, and y-velocity
-let ballXPosition = (visualViewport.width * 0.65)/2;
+let ballXPosition = (visualViewport.width * 0.6)/2;
 let ballYPosition = (visualViewport.height * 0.5)/2;
 let ballXVelocity = 8;
 let ballYVelocity = 5;
@@ -35,7 +35,7 @@ let computerPaddleYVelocity = 4;
 
 //Variables for player paddle
 let playerPaddleYPosition = 0;
-let playerPaddleYVelocity = 20;
+let playerPaddleYVelocity = 30;
 
 // Player score counter variables
 playerScoreCount = 0;
@@ -64,6 +64,7 @@ function update() {
 
     // Apply the y-position for player paddle 
     playerPaddle.style.top = `${playerPaddleYPosition}px`;
+    playerPaddle.style.bottom = `${playerPaddleYPosition + 100}px`;
 
     // Update the computer paddle's position
     if (ballYPosition >= 40 && ballYPosition <= (visualViewport.height * 0.5) - 60){
@@ -86,11 +87,11 @@ function update() {
 
     // Apply the x-position
     ball.style.left = `${ballXPosition}px`
-    ball.style.right = `${ballXPosition}px`
+    ball.style.right = `${ballXPosition + 20}px`
 
     // Apply the y-position
     ball.style.top = `${ballYPosition}px`
-    ball.style.bottom = `${ballYPosition}px`
+    ball.style.bottom = `${ballYPosition + 20}px`
 
     // bounce off top and bottom  
     if (ballYPosition <= 0 || ballYPosition >= (visualViewport.height * 0.5) - 20){
@@ -98,20 +99,30 @@ function update() {
     }
 
     // Reset ball in center after goal, with 2 second delay to restart
-    if (ballXPosition < 0 || ballXPosition > (visualViewport.width * 0.65)){
-       setTimeout(() => {ballXPosition = (visualViewport.width * 0.65)/2; ballYPosition = (visualViewport.height * 0.5)/2;}, 2000);
+    if (ballXPosition < 0 || ballXPosition > (visualViewport.width * 0.6)){
+       setTimeout(() => {ballXPosition = (visualViewport.width * 0.6)/2; ballYPosition = (visualViewport.height * 0.5)/2;}, 2000);
     }
 
     // make ball bounce off computer paddle
-    if ((ballXPosition + 20) >= (visualViewport.width * 0.65) - 20 && (ballXPosition + 20) < (visualViewport.width * 0.65) && ballYPosition > (computerPaddleYPosition - 19) && (ballYPosition < computerPaddleYPosition + 100)){
+    if ((ballXPosition + 20) >= (visualViewport.width * 0.6) - 20 && (ballXPosition + 20) < (visualViewport.width * 0.6) && ballYPosition > (computerPaddleYPosition - 19) && (ballYPosition < computerPaddleYPosition + 100)){
         ballXVelocity = ballXVelocity * -1;
     }
 
     // make ball bounce off player paddle
-    if (ballXPosition < 20 && ballXPosition > 0 && ballYPosition > playerPaddleYPosition - 19 && ballYPosition < playerPaddleYPosition + 100){
+    if (ballXPosition <= 20 && ballXPosition > 15 && ballYPosition + 20 > playerPaddleYPosition && ballYPosition < playerPaddleYPosition + 100){
         ballXVelocity = ballXVelocity * -1;
-    }
+    } else
 
+    // Bounce off top of player paddle / deflect
+    if (ballXPosition <= 20 && ballXPosition > -19 && ballYPosition + 20 >= playerPaddleYPosition && ballYPosition + 20 < playerPaddleYPosition + 20){
+        ballYVelocity = ballYVelocity * -1;
+    } else
+
+    // Bounce off bottom of player paddle / deflect
+    if (ballXPosition <= 20 && ballXPosition > -19 && ballYPosition <= playerPaddleYPosition + 100 && ballYPosition > playerPaddleYPosition + 80){
+        ballYVelocity = ballYVelocity * -1;
+    }
+    
     // Update computer score and change score text dom
     if (ballXPosition < 0 && randoCounter === false){
         randoCounter = true;
@@ -121,39 +132,12 @@ function update() {
     }
 
     // Update player score and change score text dom
-    if (ballXPosition > visualViewport.width * 0.65 && randoCounter === false){
+    if (ballXPosition > visualViewport.width * 0.6 && randoCounter === false){
         randoCounter = true;
         playerScoreCount += 1;
         playerScore.innerText = `Player: ${playerScoreCount}`;
         setTimeout(() => {randoCounter = false;}, 2000);
     }
-
-    // ** STUFF I WAS TOO AMBITIOUS ABOUT **
-    
-    // // make computer paddle bounce off top and bottom
-    // if (computerPaddleYPosition < 0 || computerPaddleYPosition > 400){
-    //     computerPaddleYVelocity = computerPaddleYVelocity * -1;
-    // }
-    
-    // // make ball bounce off top of player paddle
-    // if (ballXPosition < 20 && ballXPosition > 0 && ballYPosition > (playerPaddleYPosition - 20) && ballYPosition <= playerPaddleYPosition){
-    //     ballYVelocity = ballYVelocity * -1;
-    // }
-
-    // // make ball bounce off bottom of player paddle
-    // if (ballXPosition < 20 && ballXPosition > 0 && ballYPosition >= (playerPaddleYPosition + 100) && ballYPosition < (playerPaddleYPosition + 120)){
-    //     ballYVelocity = ballYVelocity * -1;
-    // }
-
-    // // make ball bounce off top of computer paddle
-    // if ((ballXPosition + 20) > 680 && (ballXPosition + 20) < 700 &&ballYPosition === computerPaddleYPosition && (ballYPosition < computerPaddleYPosition + 100)){
-    //     ballYVelocity = ballYVelocity * -1;
-    // }
-
-    // // make ball bounce off bottom of computer paddle
-    // if ((ballXPosition + 20) > 680 && (ballXPosition + 20) < 700 && ballYPosition === (computerPaddleYPosition + 100)){
-    //     ballYVelocity = ballYVelocity * -1;
-    // }
 
 }
 
