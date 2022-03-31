@@ -4,13 +4,13 @@ body {
     align-items: center;
     margin: 0;
     background-color: rgb(102,255,153);
-    height: 100vh;
+    height: 100%;
     flex-direction: column;
 }
 
 .game-area {
-    width: 700px;
-    height: 500px;
+    width: 65vw;
+    height: 50vh;
     background-color: white;
     position: relative;
 }
