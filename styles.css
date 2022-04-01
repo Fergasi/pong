@@ -23,6 +23,7 @@ body {
     top: 0;
     left: 0;
     border-radius: 10px;
+    
 }
 
 .paddle {
@@ -37,7 +38,7 @@ body {
     left: 0;
     top: 0;
     bottom: 0;
-    transition: .1s ease;
+    transition: .1s ease-out;
 }
 
 .computer-paddle {
@@ -49,5 +50,15 @@ body {
     flex-direction: row;
     justify-content: space-between;
     width: 500px;
+}
+
+#blink_me {
+    animation: blinker 0.5s linear infinite;
+}
+  
+@keyframes blinker {
+    50% {
+      opacity: 0.2;
+    }
 }
 

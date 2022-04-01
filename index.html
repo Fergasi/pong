@@ -11,6 +11,17 @@
 
     <h1> Welcome to Fergus's Impossible Pong Game</h1>
     <h4>* re-size your browser window to set your desired game area<br><br>* use up and down arrows to control your paddle</h4>
+    <form id="ballSpeed"> 
+        <h3>Choose your difficulty:</h3>
+        <label>Easy</label>
+        <input type="checkbox" id="1" onclick="getSelectItemThat(this.id)">
+        <label>Medium</label>
+        <input type="checkbox" id="2" onclick="getSelectItemThat(this.id)" checked="checked">
+        <label>Hard</label>
+        <input type="checkbox" id="3" onclick="getSelectItemThat(this.id)">
+    </form>
+    <br>
+    
 
 
     <div class="game-area">
